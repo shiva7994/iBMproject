@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YenSecure</title>
+    <!-- Load Tailwind CSS via CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="font-inter bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-blue-800 text-white p-6 text-center shadow-lg rounded-b-xl">
+        <h1 class="text-4xl font-bold mb-2">YenSecure</h1>
+        <p class="text-lg opacity-90">Analyze your emails for potential phishing threats.</p>
+        <nav class="mt-4 flex justify-center items-center space-x-4">
+            <a href="/header_analysis_page" class="text-white hover:text-blue-200 font-semibold text-lg px-4 py-2 rounded-full border border-white hover:border-blue-200 transition-colors duration-200">
+                Analyze Email Headers Separately &rarr;
+            </a>
+            {% if session.username %}
+                <span class="text-white text-lg ml-4">Welcome, {{ session.username }}!</span>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 text-white font-semibold text-lg px-4 py-2 rounded-full transition-colors duration-200">Logout</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto my-8 p-8 bg-white rounded-xl shadow-2xl w-full">
+        <div id="flash-messages" class="mb-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="p-3 mb-2 rounded-md text-sm {% if category == 'error' %}bg-red-100 text-red-700{% elif category == 'success' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <section id="input-section" class="mb-8 p-6 border border-gray-200 rounded-lg bg-white">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">Paste Email Content Here:</h2>
+            <textarea id="email-content" placeholder="Paste the full email content (headers, body, links) here..."
+                      class="w-full min-h-64 p-4 border border-gray-300 rounded-lg text-lg mb-6 resize-y focus:ring-blue-500 focus:border-blue-500"></textarea>
+            
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">Or Upload Email File (.eml, .msg):</h2>
+            <input type="file" id="email-file" accept=".eml,.msg"
+                   class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 mb-8
+                          file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-lg file:font-semibold
+                          file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            
+            <button id="analyze-button"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-xl
+                           shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Analyze Email
+            </button>
+            <div id="loading-indicator" class="hidden text-center mt-4 text-gray-600 font-medium text-lg">
+                Analyzing... Please wait.
+            </div>
+        </section>
+
+        <section id="results-section" class="hidden mb-8 p-6 border border-gray-200 rounded-lg bg-white">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">Analysis Results:</h2>
+            <div id="result-display" class="p-6 bg-gray-50 border border-gray-200 rounded-lg mb-6 shadow-inner">
+                <!-- Results will be displayed here dynamically -->
+            </div>
+            <button id="clear-button"
+                    class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg text-xl
+                           shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Analyze Another Email
+            </button>
+        </section>
+
+        <section id="about-section" class="p-6 border border-gray-200 rounded-lg bg-white">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">How it Works</h2>
+            <p class="mb-4 text-gray-700">Our system uses machine learning to analyze various features of an email, including:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><strong class="text-blue-600">Content:</strong> Examines suspicious keywords, urgency indicators, grammar patterns, and common phishing phrases.</li>
+                <li><strong class="text-blue-600">Links (URLs):</strong> Checks for malicious domains, URL shortening services, deceptive link text, and the age of the domain.</li>
+                <li><strong class="text-blue-600">Sender Details:</strong> Verifies sender reputation, detects domain spoofing, and analyzes email headers for anomalies.</li>
+            </ul>
+            <p class="mt-4 text-gray-700">We compare your email against a continuously updated dataset of known legitimate and phishing samples to provide an accurate assessment.</p>
+        </section>
+    </main>
+
+    <footer class="bg-blue-800 text-white p-6 text-center shadow-inner rounded-t-xl mt-8">
+        <p>&copy; 2025 YenSecure. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

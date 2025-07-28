@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YenSecure - Header Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- Reuse existing global CSS -->
+</head>
+<body class="font-inter bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-blue-800 text-white p-6 text-center shadow-lg rounded-b-xl">
+        <h1 class="text-4xl font-bold mb-2">YenSecure - Header Analyzer</h1>
+        <p class="text-lg opacity-90">Deep dive into email headers for hidden threats.</p>
+        <nav class="mt-4 flex justify-center items-center space-x-4">
+            <a href="/" class="text-white hover:text-blue-200 font-semibold text-lg px-4 py-2 rounded-full border border-white hover:border-blue-200 transition-colors duration-200">
+                &larr; Back to Full Email Analysis
+            </a>
+            {% if session.username %}
+                <span class="text-white text-lg ml-4">Welcome, {{ session.username }}!</span>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 text-white font-semibold text-lg px-4 py-2 rounded-full transition-colors duration-200">Logout</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto my-8 p-8 bg-white rounded-xl shadow-2xl w-full">
+        <div id="flash-messages" class="mb-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="p-3 mb-2 rounded-md text-sm {% if category == 'error' %}bg-red-100 text-red-700{% elif category == 'success' %}bg-green-100 text-green-700{% else %}bg-blue-100 text-blue-700{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <section id="header-input-section" class="mb-8 p-6 border border-gray-200 rounded-lg bg-white">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">Paste Full Email Content:</h2>
+            <p class="text-gray-700 mb-4">Paste the complete email, including all original headers, for detailed analysis.</p>
+            <textarea id="email-content-header" placeholder="Paste full email content with headers here..."
+                      class="w-full min-h-80 p-4 border border-gray-300 rounded-lg text-lg mb-6 resize-y font-mono focus:ring-blue-500 focus:border-blue-500"></textarea>
+            
+            <button id="analyze-header-button"
+                    class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg text-xl
+                           shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Analyze Headers
+            </button>
+            <div id="loading-indicator-header" class="hidden text-center mt-4 text-gray-600 font-medium text-lg">
+                Analyzing headers... Please wait.
+            </div>
+        </section>
+
+        <section id="header-results-section" class="hidden mb-8 p-6 border border-gray-200 rounded-lg bg-white">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-6 pb-2 border-b-2 border-blue-400">Header Analysis Results:</h2>
+            <div id="header-result-display" class="p-6 bg-gray-50 border border-gray-200 rounded-lg mb-6 shadow-inner">
+                <!-- Header analysis results will be displayed here dynamically -->
+            </div>
+            <button id="clear-header-button"
+                    class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg text-xl
+                           shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Analyze Another Header
+            </button>
+        </section>
+    </main>
+
+    <footer class="bg-blue-800 text-white p-6 text-center shadow-inner rounded-t-xl mt-8">
+        <p>&copy; 2025 YenSecure. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/js/header_analysis_page.js"></script>
+</body>
+</html>

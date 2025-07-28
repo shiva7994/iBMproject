@@ -1,0 +1,68 @@
+/*
+ * This CSS file is intentionally kept minimal as Tailwind CSS is used for most styling.
+ * It primarily defines custom fonts and any specific overrides not easily handled by Tailwind.
+ */
+
+/* Custom Font Import */
+/* 'Inter' is loaded via Google Fonts CDN in index.html,
+   so it's available directly via font-inter Tailwind class. */
+
+/* Base body styles are handled by Tailwind classes in index.html:
+   e.g., bg-gray-100, font-inter, flex, flex-col, min-h-screen */
+
+/* Header and Footer styles also primarily use Tailwind:
+   e.g., bg-blue-800, text-white, p-6, text-center, shadow-lg, rounded-b-xl, rounded-t-xl */
+
+/* Main content area styles:
+   e.g., max-w-4xl, mx-auto, my-8, p-8, bg-white, rounded-xl, shadow-2xl, w-full */
+
+/* Section styling:
+   e.g., mb-8, p-6, border, border-gray-200, rounded-lg, bg-white */
+
+/* Heading styles:
+   e.g., text-2xl, font-semibold, text-blue-700, mb-6, pb-2, border-b-2, border-blue-400 */
+
+/* Textarea styling:
+   e.g., w-full, min-h-64, p-4, border, border-gray-300, rounded-lg, text-lg, mb-6, resize-y,
+   focus:ring-blue-500, focus:border-blue-500 */
+
+/* File input styling:
+   e.g., block, w-full, text-lg, text-gray-900, border, border-gray-300, rounded-lg, cursor-pointer, bg-gray-50, mb-8,
+   file:mr-4, file:py-2, file:px-4, file:rounded-full, file:border-0, file:text-lg, file:font-semibold,
+   file:bg-blue-50, file:text-blue-700, hover:file:bg-blue-100 */
+
+/* Button styling:
+   e.g., w-full, bg-blue-600, hover:bg-blue-700, text-white, font-bold, py-3, px-6, rounded-lg, text-xl,
+   shadow-md, hover:shadow-lg, transition, duration-300, ease-in-out, transform, hover:scale-105 */
+   
+/* Specific utility classes for display toggling and result colors */
+.hidden {
+    display: none;
+}
+
+.result-safe {
+    color: #28a745; /* A shade of green */
+    font-weight: bold;
+}
+
+.result-phishing {
+    color: #dc3545; /* A shade of red */
+    font-weight: bold;
+}
+
+.result-detail {
+    margin-top: 1.5em;
+    font-size: 0.95em;
+    color: #4a5568; /* Gray-700 equivalent */
+}
+
+/* Specific styles for lists in the "How it Works" section */
+/* These are covered by Tailwind's list-disc and list-inside */
+/* ul {
+    list-style: disc;
+    margin-left: 1.5em;
+}
+
+ul li {
+    margin-bottom: 0.5em;
+} */
